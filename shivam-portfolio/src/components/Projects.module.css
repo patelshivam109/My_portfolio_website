@@ -1,0 +1,91 @@
+.projectsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 768px) {
+  .projectsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.projectCard {
+  border-radius: 20px;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.cardInner {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s ease;
+}
+
+.cardInner:hover {
+  box-shadow: var(--neon-glow);
+}
+
+.projectContent {
+  transform: translateZ(50px);
+}
+
+.projectTitle {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.projectDesc {
+  color: #a0aec0;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.techBadge {
+  background: rgba(0, 210, 255, 0.1);
+  color: var(--accent-primary);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(0, 210, 255, 0.2);
+}
+
+.projectLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.iconLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f1f5f9;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.iconLink:hover {
+  color: var(--accent-primary);
+}
