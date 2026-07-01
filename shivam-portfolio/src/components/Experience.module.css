@@ -63,10 +63,7 @@
   transition: transform 0.3s ease;
 }
 
-.timelineContent:hover {
-  transform: translateX(5px);
-  border-color: rgba(0, 210, 255, 0.3);
-}
+
 
 .timelineContent h4 {
   font-size: 1.2rem;

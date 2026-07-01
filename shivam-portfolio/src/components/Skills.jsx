@@ -5,16 +5,20 @@ import styles from './Skills.module.css';
 export default function Skills() {
   const skillCategories = [
     {
-      title: "Programming",
-      skills: ["HTML", "CSS", "JavaScript", "TypeScript", "React.js", "Node.js", "Express.js", "Java", "Python", "C++"]
+      title: "Programming & Frameworks",
+      skills: ["HTML", "CSS", "JavaScript", "TypeScript", "React.js", "Node.js", "Express.js", "MERN Stack", "Java", "Python", "C++", "Flask"]
     },
     {
-      title: "Databases",
-      skills: ["MySQL", "MongoDB"]
+      title: "Databases & Tools",
+      skills: ["MySQL", "MongoDB", "Git", "VS Code", "Next.js", "Framer Motion", "Three.js"]
     },
     {
-      title: "Tools & Technologies",
-      skills: ["VS Code", "Git", "Next.js", "Agentic AI", "Framer Motion", "Three.js"]
+      title: "AI & Specialized",
+      skills: ["Agentic AI", "Retrieval-Augmented Generation (RAG)", "Application Programming Interfaces (API)"]
+    },
+    {
+      title: "Certifications",
+      skills: ["Green Skills & AI Foundation", "IR & KE with Deep Learning (Python)", "AI Fundamentals", "Pyverse – App Creation (Python)", "Agentic AI (IBM SkillsBuild)"]
     }
   ];
 
@@ -27,8 +31,8 @@ export default function Skills() {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 100 } }
+    hidden: { opacity: 0, y: 20, scale: 0.9 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 120 } }
   };
 
   return (
@@ -39,12 +43,19 @@ export default function Skills() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        Skills & Technologies
+        Skills & Certifications
       </motion.h2>
 
       <div className={styles.skillsContainer}>
         {skillCategories.map((category, index) => (
-          <div key={index} className={styles.category}>
+          <motion.div 
+            key={index} 
+            className={`glass-panel ${styles.category}`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.15 }}
+            viewport={{ once: true, margin: "-50px" }}
+          >
             <h3 className={styles.categoryTitle}>{category.title}</h3>
             <motion.div 
               className={styles.skillTags}
@@ -59,7 +70,7 @@ export default function Skills() {
                 </motion.span>
               ))}
             </motion.div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

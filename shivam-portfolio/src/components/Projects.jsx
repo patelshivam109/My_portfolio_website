@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Code } from 'lucide-react';
 import styles from './Projects.module.css';
 
 const ProjectCard = ({ project, index }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const rotateX = useTransform(y, [-100, 100], [10, -10]);
-  const rotateY = useTransform(x, [-100, 100], [-10, 10]);
+  const rotateX = useTransform(y, [-100, 100], [15, -15]);
+  const rotateY = useTransform(x, [-100, 100], [-15, 15]);
 
   const handleMouseMove = (event) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -26,9 +26,9 @@ const ProjectCard = ({ project, index }) => {
       className={`glass-panel ${styles.projectCard}`}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
+      transition={{ duration: 0.6, delay: index * 0.2, ease: "easeOut" }}
       viewport={{ once: true, margin: "-50px" }}
-      style={{ perspective: 1000 }}
+      style={{ perspective: 1200 }}
     >
       <motion.div
         className={styles.cardInner}
@@ -36,8 +36,11 @@ const ProjectCard = ({ project, index }) => {
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       >
-        <div className={styles.projectContent}>
-          <h3 className={styles.projectTitle}>{project.title}</h3>
+        <div style={{ transform: "translateZ(40px)" }} className={styles.projectContent}>
+          <div className={styles.projectHeader}>
+            <Code className={styles.projectIcon} size={28} />
+            <h3 className={styles.projectTitle}>{project.title}</h3>
+          </div>
           <p className={styles.projectDesc}>{project.description}</p>
           <div className={styles.techStack}>
             {project.tech.map((t, i) => (
@@ -47,7 +50,7 @@ const ProjectCard = ({ project, index }) => {
           <div className={styles.projectLinks}>
             <a href={project.link} className={styles.iconLink} target="_blank" rel="noreferrer">
               <ExternalLink size={20} />
-              <span>Live Demo</span>
+              <span>View Details</span>
             </a>
           </div>
         </div>
@@ -65,7 +68,7 @@ export default function Projects() {
       link: "#"
     },
     {
-      title: "Virtual Electronic Lab (Software Simulation)",
+      title: "Virtual Electronic Lab",
       description: "Developed an interactive electronic circuit simulation platform using HTML, CSS, JavaScript, and SVG, implementing real-time simulations for MOSFETs, BJT amplifiers, inverting amplifiers, and logic gates to replicate a physical electronics lab for effective learning.",
       tech: ["HTML", "CSS", "JavaScript", "SVG"],
       link: "#"

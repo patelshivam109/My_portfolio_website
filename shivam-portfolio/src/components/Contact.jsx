@@ -56,7 +56,7 @@ export default function Contact() {
             <a href="https://github.com/patelshivam109" target="_blank" rel="noreferrer" className={styles.socialIcon}>
               <GithubIcon size={28} />
             </a>
-            <a href="https://linkedin.com/in/shivam-patel" target="_blank" rel="noreferrer" className={styles.socialIcon}>
+            <a href="https://www.linkedin.com/in/shivam-patel-70790a2ba/" target="_blank" rel="noreferrer" className={styles.socialIcon}>
               <LinkedinIcon size={28} />
             </a>
           </div>

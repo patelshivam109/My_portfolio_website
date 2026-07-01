@@ -39,10 +39,10 @@ export default function About() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <motion.p variants={itemVariants} className={styles.paragraph}>
-            I am a passionate <strong>Full Stack Developer</strong> based in Mumbai, India. Currently pursuing my Bachelor of Engineering in Electronics & Computer Science at SLRTCE, Mumbai University (CGPA: 9.4).
+            I am an engineering student focused on Full Stack Web Development, building clean interfaces, powerful backends, and complete web solutions using modern technologies.
           </motion.p>
           <motion.p variants={itemVariants} className={styles.paragraph}>
-            I enjoy building responsive, user-friendly web applications and diving deep into real-world projects. Lately, I've been expanding my horizons by learning Artificial Intelligence and Machine Learning to integrate intelligent, agentic solutions into modern applications.
+            Alongside full stack development, I am also learning AI and Machine Learning to integrate intelligent features into real-world applications. I'm driven by curiosity, hands-on learning, and the goal of becoming a versatile developer ready for future tech.
           </motion.p>
           <motion.p variants={itemVariants} className={styles.paragraph}>
             When I'm not coding, I'm constantly exploring new technologies and participating in hackathons to challenge myself and collaborate with others.
