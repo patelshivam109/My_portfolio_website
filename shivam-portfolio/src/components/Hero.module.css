@@ -27,12 +27,20 @@
   margin-bottom: 1rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
 }
 
 .neonText {
   color: var(--accent-primary);
   text-shadow: var(--neon-glow-primary);
   font-weight: 600;
+}
+
+.sparkleIcon {
+  color: var(--accent-primary);
+  filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.8));
+  vertical-align: middle;
 }
 
 .name {
