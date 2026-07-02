@@ -1,9 +1,106 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial, Float } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Sphere, Float, useTexture, Html } from '@react-three/drei';
 import { Sparkles } from 'lucide-react';
 import styles from './Hero.module.css';
+import * as THREE from 'three';
+import heroImg from '../assets/hero.png';
+
+function InteractiveFrame() {
+  const [hovered, setHovered] = useState(false);
+  const texture = useTexture(heroImg);
+  const mainGroupRef = useRef();
+  const cardsGroupRef = useRef();
+  const hoverProgress = useRef(0);
+
+  useFrame((state, delta) => {
+    // 1. Flip animation (rotates 180 degrees to reveal back)
+    const targetRot = hovered ? Math.PI : 0;
+    if (mainGroupRef.current) {
+      mainGroupRef.current.rotation.y = THREE.MathUtils.lerp(mainGroupRef.current.rotation.y, targetRot, delta * 6);
+    }
+    
+    // 2. Shuffling cards animation
+    const progressTarget = hovered ? 1 : 0;
+    hoverProgress.current = THREE.MathUtils.lerp(hoverProgress.current, progressTarget, delta * 5);
+
+    if (cardsGroupRef.current) {
+      cardsGroupRef.current.children.forEach((cardGroup, i) => {
+        // Stacked at center when not hovered, spreads out vertically when hovered
+        const targetY = 1.5 - (i * 1.0); // Spreads from top to bottom
+        const targetX = (i % 2 === 0 ? -0.15 : 0.15); // Slight left/right stagger
+        const targetRotZ = (i % 2 === 0 ? 0.05 : -0.05); // Slight tilt
+        
+        cardGroup.position.y = THREE.MathUtils.lerp(0, targetY, hoverProgress.current);
+        cardGroup.position.x = THREE.MathUtils.lerp(0, targetX, hoverProgress.current);
+        cardGroup.rotation.z = THREE.MathUtils.lerp(0, targetRotZ, hoverProgress.current);
+      });
+    }
+  });
+
+  const topProjects = [
+    "1. News Article Summary",
+    "2. Virtual Electronic Lab",
+    "3. AI / ML Automation",
+    "4. AI Web Developer"
+  ];
+
+  return (
+    <group 
+      onPointerOver={() => setHovered(true)} 
+      onPointerOut={() => setHovered(false)}
+    >
+      <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
+        <group ref={mainGroupRef}>
+          {/* FRONT: Photo Frame */}
+          <group position={[0, 0, 0.1]}>
+            <mesh>
+              <boxGeometry args={[3.2, 3.2, 0.1]} />
+              <meshStandardMaterial map={texture} roughness={0.3} />
+            </mesh>
+            {/* Glowing Border */}
+            <mesh position={[0, 0, -0.06]}>
+              <boxGeometry args={[3.4, 3.4, 0.1]} />
+              <meshStandardMaterial color="#00e5ff" emissive="#00e5ff" emissiveIntensity={0.6} />
+            </mesh>
+          </group>
+
+          {/* BACK: Projects (Shuffling Cards) */}
+          <group ref={cardsGroupRef} position={[0, 0, -0.1]} rotation={[0, Math.PI, 0]}>
+            {topProjects.map((project, i) => (
+              <group key={i} position={[0, 0, -i * 0.01]}>
+                <Html 
+                  transform 
+                  occlude 
+                  center
+                  style={{
+                    background: 'rgba(15, 15, 20, 0.95)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(0, 229, 255, 0.3)',
+                    borderLeft: '4px solid #00e5ff',
+                    padding: '15px 30px',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    fontSize: '1.1rem',
+                    whiteSpace: 'nowrap',
+                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.8)',
+                    width: '300px',
+                    textAlign: 'center',
+                    pointerEvents: 'none', // Prevent HTML from stealing hover from the group
+                  }}
+                >
+                  {project}
+                </Html>
+              </group>
+            ))}
+          </group>
+        </group>
+      </Float>
+    </group>
+  );
+}
 
 export default function Hero() {
   return (
@@ -68,43 +165,15 @@ export default function Hero() {
       </div>
 
       <div className={styles.canvasContainer}>
-        <Canvas>
+        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
           <Suspense fallback={null}>
             <ambientLight intensity={0.8} />
             <directionalLight position={[10, 10, 5]} intensity={2} color="#00e5ff" />
             <directionalLight position={[-10, -10, -5]} intensity={2} color="#7b2cbf" />
             
-            <Float speed={2} rotationIntensity={1} floatIntensity={1.5}>
-              <mesh>
-                <torusKnotGeometry args={[1.2, 0.2, 128, 32]} />
-                <meshStandardMaterial color="#00e5ff" wireframe opacity={0.6} transparent />
-              </mesh>
-              
-              <Sphere args={[0.6, 64, 64]}>
-                <meshStandardMaterial 
-                  color="#1a0b2e" 
-                  emissive="#7b2cbf"
-                  emissiveIntensity={1.5}
-                  roughness={0.1}
-                  metalness={0.9}
-                />
-              </Sphere>
-            </Float>
+            <InteractiveFrame />
 
-            <Float speed={3} rotationIntensity={2} floatIntensity={3}>
-              <mesh position={[2.5, 1.5, 0]}>
-                <icosahedronGeometry args={[0.4, 0]} />
-                <meshStandardMaterial color="#ff007f" wireframe />
-              </mesh>
-            </Float>
-            <Float speed={2.5} rotationIntensity={2} floatIntensity={2.5}>
-              <mesh position={[-2.5, -1.5, 1]}>
-                <octahedronGeometry args={[0.5, 0]} />
-                <meshStandardMaterial color="#00e5ff" wireframe />
-              </mesh>
-            </Float>
-
-            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
+            <OrbitControls enableZoom={false} enablePan={false} />
           </Suspense>
         </Canvas>
       </div>

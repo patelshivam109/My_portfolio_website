@@ -5,20 +5,16 @@ import styles from './Skills.module.css';
 export default function Skills() {
   const skillCategories = [
     {
-      title: "Programming & Frameworks",
-      skills: ["HTML", "CSS", "JavaScript", "TypeScript", "React.js", "Node.js", "Express.js", "MERN Stack", "Java", "Python", "C++", "Flask"]
+      title: "Machine Learning",
+      skills: ["Python", "Model Training & Fine-Tuning", "Prompt Engineering", "Scikit-Learn", "Pandas", "TensorFlow", "NLP"]
     },
     {
-      title: "Databases & Tools",
-      skills: ["MySQL", "MongoDB", "Git", "VS Code", "Next.js", "Framer Motion", "Three.js"]
+      title: "Web Development",
+      skills: ["HTML5", "CSS3", "JavaScript", "React.js", "Next.js", "Node.js", "Express.js", "Java", "C++", "MySQL", "MongoDB"]
     },
     {
-      title: "AI & Specialized",
-      skills: ["Agentic AI", "Retrieval-Augmented Generation (RAG)", "Application Programming Interfaces (API)"]
-    },
-    {
-      title: "Certifications",
-      skills: ["Green Skills & AI Foundation", "IR & KE with Deep Learning (Python)", "AI Fundamentals", "Pyverse – App Creation (Python)", "Agentic AI (IBM SkillsBuild)"]
+      title: "Developer Tools",
+      skills: ["Git", "GitHub", "VS Code", "Postman", "Microsoft Office"]
     }
   ];
 
