@@ -47,11 +47,18 @@ function InteractiveFrame() {
   ];
 
   return (
-    <group 
-      onPointerOver={() => setHovered(true)} 
-      onPointerOut={() => setHovered(false)}
-    >
-      <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
+    <group>
+      {/* Invisible Hover Hitbox to keep the interaction stable */}
+      <mesh 
+        onPointerOver={() => setHovered(true)} 
+        onPointerOut={() => setHovered(false)}
+        position={[0, 0, 0]}
+      >
+        <boxGeometry args={[4.5, 5.5, 2]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
+
+      <Float speed={2} rotationIntensity={0.1} floatIntensity={0.2}>
         <group ref={mainGroupRef}>
           {/* FRONT: Photo Frame */}
           <group position={[0, 0, 0.1]}>
@@ -72,7 +79,6 @@ function InteractiveFrame() {
               <group key={i} position={[0, 0, -i * 0.01]}>
                 <Html 
                   transform 
-                  occlude 
                   center
                   style={{
                     background: 'rgba(15, 15, 20, 0.95)',
@@ -88,7 +94,9 @@ function InteractiveFrame() {
                     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.8)',
                     width: '300px',
                     textAlign: 'center',
-                    pointerEvents: 'none', // Prevent HTML from stealing hover from the group
+                    pointerEvents: 'none', 
+                    opacity: hovered ? 1 : 0,
+                    transition: 'opacity 0.4s ease-in-out',
                   }}
                 >
                   {project}
