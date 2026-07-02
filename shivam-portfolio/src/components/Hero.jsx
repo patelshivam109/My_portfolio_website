@@ -38,8 +38,8 @@ function InteractiveFrame() {
   const topProjects = [
     { title: "1. News Article Summary", pos: [2.5, 1.8, 0.1] },
     { title: "2. Virtual Electronic Lab", pos: [2.5, -1.8, 0.1] },
-    { title: "3. AI / ML Automation", pos: [-2.5, -1.8, 0.1] },
-    { title: "4. AI Web Developer", pos: [-2.5, 1.8, 0.1] }
+    { title: "3. Talk2Mind", pos: [-2.5, -1.8, 0.1] },
+    { title: "4. ResQlink", pos: [-2.5, 1.8, 0.1] }
   ];
 
   return (

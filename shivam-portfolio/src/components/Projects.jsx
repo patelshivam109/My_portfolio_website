@@ -50,7 +50,7 @@ const ProjectCard = ({ project, index }) => {
           <div className={styles.projectLinks}>
             <a href={project.link} className={styles.iconLink} target="_blank" rel="noreferrer">
               <ExternalLink size={20} />
-              <span>View Details</span>
+              <span>View live</span>
             </a>
           </div>
         </div>
@@ -65,13 +65,13 @@ export default function Projects() {
       title: "News Article Summary Generator",
       description: "Designed and implemented a web-based News Article Summary Generator using a Flask backend and responsive frontend technologies, enabling automated summarization from text, keywords, and URLs with support for multilingual processing, text-to-speech, UI theming, and database management.",
       tech: ["Flask", "Python", "HTML", "CSS", "JavaScript"],
-      link: "#"
+      link: "https://news-article-summary-generator.onrender.com/"
     },
     {
       title: "Virtual Electronic Lab",
       description: "Developed an interactive electronic circuit simulation platform using HTML, CSS, JavaScript, and SVG, implementing real-time simulations for MOSFETs, BJT amplifiers, inverting amplifiers, and logic gates to replicate a physical electronics lab for effective learning.",
       tech: ["HTML", "CSS", "JavaScript", "SVG"],
-      link: "#"
+      link: "https://shubuexe.github.io/Virtual-Lab-2.3.1-/"
     }
   ];
 

@@ -14,7 +14,7 @@ export default function Skills() {
     },
     {
       title: "Developer Tools",
-      skills: ["Git", "GitHub", "VS Code", "Postman", "Microsoft Office"]
+      skills: ["Git", "GitHub", "Postman", "Microsoft Office"]
     }
   ];
 
