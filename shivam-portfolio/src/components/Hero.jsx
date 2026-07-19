@@ -14,14 +14,14 @@ function InteractiveFrame() {
   useFrame((state, delta) => {
     const time = state.clock.elapsedTime;
     const loopDuration = 6; // Total time for one full loop
-    const phase = time % loopDuration; 
+    const phase = time % loopDuration;
 
     if (cardsGroupRef.current) {
       cardsGroupRef.current.children.forEach((cardGroup, i) => {
         // Pop up one by one every 0.8 seconds
-        const appearTime = i * 0.8; 
+        const appearTime = i * 0.8;
         const disappearTime = 5.0; // At 5s, they all disappear together
-        
+
         let scaleTarget = 0;
         if (phase >= appearTime && phase < disappearTime) {
           scaleTarget = 1;
@@ -62,8 +62,8 @@ function InteractiveFrame() {
         <group ref={cardsGroupRef}>
           {topProjects.map((project, i) => (
             <group key={i} position={project.pos} scale={0}>
-              <Html 
-                transform 
+              <Html
+                transform
                 center
                 style={{
                   background: 'rgba(15, 15, 20, 0.95)',
@@ -96,29 +96,29 @@ export default function Hero() {
   return (
     <section id="home" className={`section ${styles.hero}`}>
       <div className={styles.content}>
-        <motion.p 
+        <motion.p
           className={styles.greeting}
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <span className={styles.neonText}>Hello, I'm</span> 
-          <motion.span 
-            animate={{ rotate: [0, 14, -8, 14, -4, 10, 0, 0] }} 
-            transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }} 
+          <span className={styles.neonText}>Hello, I'm</span>
+          <motion.span
+            animate={{ rotate: [0, 14, -8, 14, -4, 10, 0, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
             style={{ display: 'inline-block', transformOrigin: '70% 70%', marginLeft: '8px', fontSize: '1.4rem' }}
           >
             👋
           </motion.span>
         </motion.p>
-        <motion.h1 
+        <motion.h1
           className={styles.name}
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
         >
           Shivam Patel
-          <motion.span 
+          <motion.span
             initial={{ scale: 0 }}
             animate={{ scale: 1, rotate: [0, 15, -15, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -127,15 +127,15 @@ export default function Hero() {
             <Sparkles className={styles.sparkleIcon} size={48} />
           </motion.span>
         </motion.h1>
-        <motion.h2 
+        <motion.h2
           className={styles.role}
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
         >
-          Full Stack Developer & <br/> AI Enthusiast
+          Full Stack Developer & <br /> AI Enthusiast
         </motion.h2>
-        <motion.p 
+        <motion.p
           className={styles.bio}
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -143,7 +143,7 @@ export default function Hero() {
         >
           Building intelligent web applications and integrating real-world AI solutions to shape the future of technology.
         </motion.p>
-        <motion.div 
+        <motion.div
           className={styles.cta}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -160,7 +160,7 @@ export default function Hero() {
             <ambientLight intensity={0.8} />
             <directionalLight position={[10, 10, 5]} intensity={2} color="#00e5ff" />
             <directionalLight position={[-10, -10, -5]} intensity={2} color="#7b2cbf" />
-            
+
             <InteractiveFrame />
 
             <OrbitControls enableZoom={false} enablePan={false} />
