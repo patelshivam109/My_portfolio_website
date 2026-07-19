@@ -69,7 +69,7 @@ export default function About() {
           <motion.div variants={itemVariants} className={`glass-panel ${styles.card}`}>
             <Cpu className={styles.cardIcon} size={40} />
             <h3>AI & Data</h3>
-            <p>Agentic AI, MySQL, MongoDB</p>
+            <p>AI,ML,MySQL, MongoDB</p>
           </motion.div>
         </motion.div>
       </div>
