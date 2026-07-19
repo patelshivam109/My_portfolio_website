@@ -107,9 +107,9 @@ const RobotAvatar = ({ hitRef }) => {
   );
 };
 
-const ReactLogo = ({ position, rotation }) => {
+const ReactLogo = React.forwardRef((props, ref) => {
   return (
-    <group position={position} rotation={rotation} scale={0.4}>
+    <group ref={ref} {...props} scale={0.4} visible={false}>
       <mesh>
         <sphereGeometry args={[0.3, 16, 16]} />
         <meshStandardMaterial color="#00e5ff" emissive="#00e5ff" emissiveIntensity={2} toneMapped={false} />
@@ -128,43 +128,97 @@ const ReactLogo = ({ position, rotation }) => {
       </mesh>
     </group>
   );
-};
+});
+
+const DatabaseIcon = React.forwardRef((props, ref) => (
+  <group ref={ref} {...props} scale={0.4} visible={false}>
+    <mesh position={[0, 0.6, 0]}>
+      <cylinderGeometry args={[0.8, 0.8, 0.5, 32]} />
+      <meshStandardMaterial color="#00FF66" emissive="#00FF66" emissiveIntensity={1} />
+    </mesh>
+    <mesh position={[0, 0, 0]}>
+      <cylinderGeometry args={[0.8, 0.8, 0.5, 32]} />
+      <meshStandardMaterial color="#00FF66" emissive="#00FF66" emissiveIntensity={1} />
+    </mesh>
+    <mesh position={[0, -0.6, 0]}>
+      <cylinderGeometry args={[0.8, 0.8, 0.5, 32]} />
+      <meshStandardMaterial color="#00FF66" emissive="#00FF66" emissiveIntensity={1} />
+    </mesh>
+  </group>
+));
+
+const PythonIcon = React.forwardRef((props, ref) => (
+  <group ref={ref} {...props} scale={0.4} visible={false}>
+    <mesh position={[-0.3, 0.2, 0]} rotation={[0, 0, Math.PI / 2]}>
+      <torusGeometry args={[0.6, 0.25, 16, 50, Math.PI * 1.5]} />
+      <meshStandardMaterial color="#3776AB" emissive="#3776AB" emissiveIntensity={1} />
+    </mesh>
+    <mesh position={[0.3, -0.2, 0]} rotation={[0, 0, -Math.PI / 2]}>
+      <torusGeometry args={[0.6, 0.25, 16, 50, Math.PI * 1.5]} />
+      <meshStandardMaterial color="#F7DF1E" emissive="#F7DF1E" emissiveIntensity={1} />
+    </mesh>
+  </group>
+));
+
+const AIIcon = React.forwardRef((props, ref) => (
+  <group ref={ref} {...props} scale={0.4} visible={false}>
+    <mesh>
+      <icosahedronGeometry args={[0.8, 0]} />
+      <meshStandardMaterial color="#FF007F" emissive="#FF007F" emissiveIntensity={2} wireframe />
+    </mesh>
+    <mesh>
+      <sphereGeometry args={[0.4, 16, 16]} />
+      <meshStandardMaterial color="#FF007F" emissive="#FF007F" emissiveIntensity={1} />
+    </mesh>
+  </group>
+));
 
 function InteractiveAvatarScene() {
   const hitRef = useRef(false);
-  const logoRef = useRef();
+  const iconRefs = [useRef(), useRef(), useRef(), useRef()];
+  const currentIconIndex = useRef(0);
+  const previousCycle = useRef(0);
 
   useFrame((state) => {
     const time = state.clock.elapsedTime;
-    
-    if (logoRef.current) {
-      logoRef.current.rotation.x = time * 2;
-      logoRef.current.rotation.y = time * 3;
+    const cycle = time % 3; 
 
-      // 3-second animation loop
-      const cycle = time % 3; 
-      
-      if (cycle < 1.5) {
-        // Fall from Y=6 to Y=1.5
-        const progress = Math.pow(cycle / 1.5, 2.5); // easing
-        logoRef.current.position.y = THREE.MathUtils.lerp(6, 1.5, progress);
-        logoRef.current.position.x = 0;
-        
-        if (cycle > 1.4) {
-          hitRef.current = true;
+    if (cycle < previousCycle.current) {
+      currentIconIndex.current = (currentIconIndex.current + 1) % 4;
+    }
+    previousCycle.current = cycle;
+
+    iconRefs.forEach((ref, index) => {
+      if (ref.current) {
+        if (index === currentIconIndex.current) {
+          ref.current.visible = true;
+          
+          ref.current.rotation.x = time * 2;
+          ref.current.rotation.y = time * 3;
+
+          if (cycle < 1.5) {
+            const progress = Math.pow(cycle / 1.5, 2.5);
+            ref.current.position.y = THREE.MathUtils.lerp(6, 1.5, progress);
+            ref.current.position.x = 0;
+            
+            if (cycle > 1.4) {
+              hitRef.current = true;
+            } else {
+              hitRef.current = false;
+            }
+          } else {
+            ref.current.position.y += 0.05;
+            ref.current.position.x += 0.1;
+            
+            if (cycle > 1.8) {
+              hitRef.current = false;
+            }
+          }
         } else {
-          hitRef.current = false;
-        }
-      } else {
-        // Bounce off right and up
-        logoRef.current.position.y += 0.05; // float away
-        logoRef.current.position.x += 0.1;
-        
-        if (cycle > 1.8) {
-          hitRef.current = false;
+          ref.current.visible = false;
         }
       }
-    }
+    });
   });
 
   return (
@@ -173,8 +227,11 @@ function InteractiveAvatarScene() {
         <RobotAvatar hitRef={hitRef} />
       </Float>
       
-      <group ref={logoRef}>
-        <ReactLogo />
+      <group>
+        <ReactLogo ref={iconRefs[0]} />
+        <PythonIcon ref={iconRefs[1]} />
+        <DatabaseIcon ref={iconRefs[2]} />
+        <AIIcon ref={iconRefs[3]} />
       </group>
       
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -2.5, 0]}>
